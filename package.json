@@ -1,0 +1,38 @@
+{
+  "name": "xcelpros-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "engines": {
+    "node": "8.11.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saggy0907/project1.git"
+  },
+  "author": "sagar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saggy0907/project1/issues"
+  },
+  "homepage": "https://github.com/saggy0907/project1#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.1.0",
+    "cors": "^2.8.4",
+    "css": "^2.2.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "firebase": "^4.12.1",
+    "firebase-tools": "^3.18.4",
+    "jquery": "^3.3.1",
+    "mongodb": "^3.0.6",
+    "mongoose": "^5.2.17",
+    "node-otp": "^1.2.0",
+    "twilio": "^3.15.1"
+  }
+}
