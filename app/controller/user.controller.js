@@ -7,6 +7,9 @@ const path = require('path');
 
 var genratedToken;
 var abcd;
+var uName;
+var tokan;
+user={};
 module.exports.registration = (req,res)=>{
   var body=req.body;
   var userName = req.body.username;
@@ -15,8 +18,8 @@ if (err) {
 return console.log(err);
 }else{
 req.body.password = hash;
-req.body.cofirm = hash;
-if(body.password&&body.confirm&&body.username&&body.name&&body.email){
+req.body.confirm = hash;
+if(body.password&&body.confirm&&body.username&&body.name&&body.email&&body.role){
   User
     .find({username: userName}, (err, doc) => {
       if (err) {
@@ -26,9 +29,8 @@ if(body.password&&body.confirm&&body.username&&body.name&&body.email){
           var user = new User(req.body)
           user.save((error, doc) => {
             if (error) {
-              res.status(405).json({
-                "message": "email already Exist...!!!"
-              })
+               console.error(error);
+              res.status(405).json({"message": "Error is there...!!!"})
             } else {
               var currentDate = new Date();
               doc.updated_at = currentDate;
@@ -60,26 +62,35 @@ if(body.password&&body.confirm&&body.username&&body.name&&body.email){
 
 module.exports.validate = (req,res,next)=>{
 
-  var token = genratedToken;
-  console.log("controller token =",token);
+   var token = genratedToken;
+  // console.log("controller token =",token);
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
   jwt.verify(token, CONFIG.SECRETE, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    res.send(decoded);
     next();
   });
 }
 
 module.exports.login = (req,res)=>{
-User.findOne({ username: req.body.username }, function (err, user) {
-   if (err) return res.status(500).send('Error on the server.');
-   if (!user) return res.status(404).send('No user found.');
-   var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-   if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-   var token = jwt.sign({ id: user._id }, CONFIG.SECRETE, {
-     expiresIn: 86400 // expires in 24 hours
-   });
-   genratedToken=token;
-   res.status(200).send({ auth: true, token: token });
+User.findOne({ username: req.body.username } , function (err, user) {
+     if (err) return res.status(500).send({msg:"No user found. Please singUp First"});
+     if (!user) {return res.status(404).send({msg:"No user found. Please singUp First"});}else{
+     if(user.role==req.body.role){
+     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null,msg:"Wrong password" });
+     var token = jwt.sign({  role:user.role }, CONFIG.SECRETE, {
+       expiresIn: 86400 // expires in 24 hours
+     });
+     genratedToken=token;
+     var role=user.role;
+     uName=user.username;
+     console.log("uName =",uName);
+     res.status(200).send({ auth: true, token: token, role: role, username:uName });
+
+   }else{
+     res.status(401).send({ auth: false, token: null,msg:"wrong Role" });
+   }}
  });
 }
 
@@ -94,3 +105,22 @@ module.exports.removeOneUser = (req, res) => {
         .json(doc)
     })
 }
+
+module.exports.getAll = (req,res)=>{
+  User
+  .find()
+  .exec((error,doc)=>{
+    console.log("found total users = ",doc.length);
+    res
+    .status(200)
+    .json(doc)
+  })
+};
+
+module.exports.getOne = (req,res)=>{
+   console.log("uName2 =",uName);
+  User.findOne({ username: uName } , function (err, user) {
+     res.status(200).send({ auth: true, token: genratedToken, user });
+     console.log("hi=", user);
+   });
+};

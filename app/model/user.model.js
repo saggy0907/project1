@@ -8,6 +8,7 @@ var user = mongoose.Schema({
       password:String,
       confirm:String,
       profession:String,
+      role:String
   });
 
 mongoose.model('User',user,'proj.users');

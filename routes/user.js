@@ -4,14 +4,22 @@ const ctrlStd = require('../app/controller/user.controller');
 
 router
 .route('/login')
-.post(ctrlStd.login,ctrlStd.validate);
+.post(ctrlStd.login);
 
 router
 .route('/registration')
-.post(ctrlStd.registration,ctrlStd.validate);
+.post(ctrlStd.registration);
 
 router
 .route('/:userId')
 .delete(ctrlStd.removeOneUser);
+
+router
+.route('/all')
+.get(ctrlStd.getAll);
+
+router
+.route('/login/one')
+.get(ctrlStd.getOne);
 
 module.exports=router;
