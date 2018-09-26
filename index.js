@@ -6,9 +6,20 @@ const bodyParser = require('body-parser');
 const PATH = require('path');
 // var routes = require('./routes');
 var user= require('./routes/user');
+const cool = require('cool-ascii-faces')
+
 // var javaRoute= require('./routes/javaRoute');
 var app = express();
-
+// const firebase=require('firebase')
+//
+// firebase.initializeApp({
+//   "apiKey": "AIzaSyA71knpvuvfSpeQPcKIf5u9SDjkVPMq5xk",
+//   "databaseURL": "https://my-project-1518069219955.firebaseio.com",
+//   "storageBucket": "my-project-1518069219955.appspot.com",
+//   "authDomain": "my-project-1518069219955.firebaseapp.com",
+//   "messagingSenderId": "512113971991",
+//   "projectId": "my-project-1518069219955"
+// });
 
 
 app.set('port', CONFIG.PORT);
@@ -21,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+ app.get('/cool', (req, res) => res.send(cool()));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,x-access-token, Content-Type,token, Accept,*");
