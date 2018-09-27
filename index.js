@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const PATH = require('path');
 // var routes = require('./routes');
 var user= require('./routes/user');
-const cool = require('cool-ascii-faces')
+
 // const http = require("http");
 var http = require('http').Server(app);
 // const server = http.createServer(function (req, res) {
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
- app.get('/cool', (req, res) => res.send(cool()));
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,x-access-token, Content-Type,token, Accept,*");
