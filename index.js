@@ -7,20 +7,14 @@ const PATH = require('path');
 // var routes = require('./routes');
 var user= require('./routes/user');
 const cool = require('cool-ascii-faces')
+// const http = require("http");
+var http = require('http').Server(app);
+// const server = http.createServer(function (req, res) {
+// 	res.end("Hello!");
+// })
 
 // var javaRoute= require('./routes/javaRoute');
 var app = express();
-// const firebase=require('firebase')
-//
-// firebase.initializeApp({
-//   "apiKey": "AIzaSyA71knpvuvfSpeQPcKIf5u9SDjkVPMq5xk",
-//   "databaseURL": "https://my-project-1518069219955.firebaseio.com",
-//   "storageBucket": "my-project-1518069219955.appspot.com",
-//   "authDomain": "my-project-1518069219955.firebaseapp.com",
-//   "messagingSenderId": "512113971991",
-//   "projectId": "my-project-1518069219955"
-// });
-
 
 app.set('port', CONFIG.PORT);
 console.log("before start");
@@ -43,6 +37,10 @@ app.use(express.static(__dirname + '/public'));
 // app.use('/tutorials',routes);
 // app.use('/javascript',javaRoute);
 app.use('/user',user);
-app.listen(app.get('port'), () => {
-  console.log("port is " + app.get('port'));
+// app.listen(app.get('port'), () => {
+//   console.log("port is " + app.get('port'));
+// });
+
+http.listen(process.env.PORT || 8000, function(){
+  console.log('listening on *:' + 8080);
 });
