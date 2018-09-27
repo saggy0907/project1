@@ -104,6 +104,7 @@ module.exports.removeOneUser = (req, res) => {
         .status(200)
         .json(doc)
     })
+    
 }
 
 module.exports.getAll = (req,res)=>{

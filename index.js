@@ -37,10 +37,6 @@ app.use(express.static(__dirname + '/public'));
 // app.use('/tutorials',routes);
 // app.use('/javascript',javaRoute);
 app.use('/user',user);
-// app.listen(app.get('port'), () => {
-//   console.log("port is " + app.get('port'));
-// });
-
-http.listen(process.env.PORT || process.env.port || 8000, "0.0.0.0",function(){
-  console.log('listening on *:' + 8080);
+app.listen(app.get('port')||process.env.PORT, () => {
+  console.log("port is " + app.get('port'));
 });
