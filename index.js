@@ -41,6 +41,6 @@ app.use('/user',user);
 //   console.log("port is " + app.get('port'));
 // });
 
-http.listen(process.env.PORT || 8000, function(){
+http.listen(process.env.port || 8000, function(){
   console.log('listening on *:' + 8080);
 });
