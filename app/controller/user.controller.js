@@ -12,6 +12,7 @@ var tokan;
 user={};
 module.exports.registration = (req,res)=>{
   var body=req.body;
+
   var userName = req.body.username;
   bcrypt.hash(req.body.password, 10, function (err, hash){
 if (err) {
@@ -19,7 +20,8 @@ return console.log(err);
 }else{
 req.body.password = hash;
 req.body.confirm = hash;
-if(body.password&&body.confirm&&body.username&&body.name&&body.email&&body.role){
+if(body.password&&body.confirm&&body.username&&body.name&&body.email&&(body.role1||body.role2||body.role3||body.role4||body.role5)){
+
   User
     .find({username: userName}, (err, doc) => {
       if (err) {
@@ -40,7 +42,7 @@ if(body.password&&body.confirm&&body.username&&body.name&&body.email&&body.role)
 
               res
                 .status(201)
-                .send({"message":"new user registered...!",
+                .send({"message":"new user registered...!"
                 });
             }
           })
@@ -74,9 +76,10 @@ module.exports.validate = (req,res,next)=>{
 
 module.exports.login = (req,res)=>{
 User.findOne({ username: req.body.username } , function (err, user) {
-     if (err) return res.status(500).send({msg:"No user found. Please singUp First"});
-     if (!user) {return res.status(404).send({msg:"No user found. Please singUp First"});}else{
-     if(user.role==req.body.role){
+     if (err) return res.status(500).send({msg1:"No user found. Please singUp First"});
+     if (!user) {return res.status(404).send({msg2:"No user found. Please singUp First"});}
+     else{
+     // if(user.role==req.body.role){
      var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
      if (!passwordIsValid) return res.status(401).send({ auth: false, token: null,msg:"Wrong password" });
      var token = jwt.sign({  role:user.role }, CONFIG.SECRETE, {
@@ -88,9 +91,7 @@ User.findOne({ username: req.body.username } , function (err, user) {
      console.log("uName =",uName);
      res.status(200).send({ auth: true, token: token, role: role, username:uName });
 
-   }else{
-     res.status(401).send({ auth: false, token: null,msg:"wrong Role" });
-   }}
+}
  });
 }
 
@@ -104,7 +105,7 @@ module.exports.removeOneUser = (req, res) => {
         .status(200)
         .json(doc)
     })
-    
+
 }
 
 module.exports.getAll = (req,res)=>{
